@@ -464,7 +464,56 @@ local defaults; do
 
             self:Resize();
         end
-    
+
+
+
+	function types:Label(name)
+            local order = self:GetOrder();
+            local determinedSize = UDim2.new(1, 0, 0, 25)
+            local determinedPos = UDim2.new(0, 0, 0, 4);
+            local secondarySize = UDim2.new(1, 0, 0, 20);
+                        
+            if order == 0 then
+                determinedSize = UDim2.new(1, 0, 0, 21)
+                determinedPos = UDim2.new(0, 0, 0, -1);
+                secondarySize = nil
+            end
+            
+            local check = library:Create('Frame', {
+                Name = 'Section';
+                BackgroundTransparency = 1;
+                Size = determinedSize;
+                BackgroundColor3 = library.options.sectncolor;
+                BorderSizePixel = 0;
+                LayoutOrder = order;
+                library:Create('TextLabel', {
+                    Name = 'section_lbl';
+                    Text = name;
+                    BackgroundTransparency = 0;
+                    BorderSizePixel = 0;
+                    BackgroundColor3 = library.options.sectncolor;
+                    TextColor3 = library.options.textcolor;
+                    Position = determinedPos;
+                    Size     = (secondarySize or UDim2.new(1, 0, 1, 0));
+                    Font = library.options.font;
+                    TextSize = library.options.fontsize;
+                    TextStrokeTransparency = library.options.textstroke;
+                    TextStrokeColor3 = library.options.strokecolor;
+                });
+                Parent = self.container;
+            });
+
+	
+        
+            self:Resize();
+		local func = {}
+		function func:Set(newText)
+			check.section_lbl.Text = newText
+		end 
+		return func 
+        end
+
+		
         function types:Section(name)
             local order = self:GetOrder();
             local determinedSize = UDim2.new(1, 0, 0, 25)
